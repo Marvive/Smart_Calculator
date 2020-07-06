@@ -18,16 +18,14 @@ while "/exit" not in nums:
         num_list = nums.split()
     else:
         num_list = re.findall(r"[\w]+", nums)
-        # num2_list = re.split(r"[\W]+", nums)
-    # print("Found =")
-    # print(num_list)
-    # print(num2_list)
 
     if "/exit" in nums:
         print("Bye")
         break
     elif "/help" in nums:
         print("The program calculates the sum of numbers")
+    elif "//" in nums:
+        print("Invalid expression")
     elif not nums:
         continue
 
@@ -45,9 +43,6 @@ while "/exit" not in nums:
 
                 print("Invalid assignment")
                 continue
-            # elif len(num_list) > 3:
-            #     print("Invalid assignment")
-            #     continue
             else:
                 var_dict[num_list[0]] = num_list[-1]
 
@@ -62,14 +57,14 @@ while "/exit" not in nums:
         for i, j in enumerate(num_list):
             if j in var_dict:
                 num_list[i] = var_dict[j]
-            # elif j == "^":
-            #     num_list[i] = "**"
-
-        # print(num_list)
         try:
-            print(eval("".join(num_list)))
+            answer = eval("".join(num_list))
+            try:
+                if answer.is_integer():
+                    print(int(answer))
+            except AttributeError:
+                print(answer)
         except SyntaxError:
-            # print("Syntax Error")
             if nums.startswith("/"):
                 print("Unknown command")
             else:
